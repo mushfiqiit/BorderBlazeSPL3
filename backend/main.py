@@ -1,5 +1,6 @@
-from fastapi import FastAPI, File, UploadFile
+from fastapi import FastAPI, File, UploadFile, Form
 from fastapi.middleware.cors import CORSMiddleware
+from typing import Annotated
 
 app = FastAPI()
 
@@ -24,3 +25,17 @@ async def create_upload_file(file: UploadFile = File(...)):
     contents = await file.read()
     print(file.filename)
     return {"filename": file.filename, "file_size": len(contents)}
+
+@app.post("/files2/")
+async def create_file(
+    file: Annotated[bytes, File()],
+    fileb: Annotated[UploadFile, File()],
+    token: Annotated[str, Form()],
+):
+    return {
+        "file_size": len(file),
+        "token": token,
+        "fileb_content_type": fileb.content_type,
+    }
+
+

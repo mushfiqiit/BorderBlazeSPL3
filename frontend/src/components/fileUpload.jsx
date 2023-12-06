@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import MyForm from './methodChoice';
 
 const FileUploadComponent = () => {
   const [file, setFile] = useState(null);
@@ -54,14 +55,15 @@ const FileUploadComponent = () => {
           <p>Uploaded Image:</p>
           <img src={imageSrc} alt="Uploaded" style={{ maxWidth: '100%' }} />
         </div>
-      )}
+      )
+      }
 
-      {imageSrc && (
-        <div>
-          <p>Uploaded Image:</p>
-          <img src={imageSrc} alt="Uploaded" style={{ maxWidth: '100%' }} />
-        </div>
-      )}
+      {
+        imageSrc && (
+          <MyForm/>
+        )
+      }
+
     </div>
   );
 };

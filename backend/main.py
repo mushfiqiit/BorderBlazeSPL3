@@ -4,11 +4,15 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 import numpy as np
 from fastapi.middleware.cors import CORSMiddleware
+from neighborhood import KNearestNeighbor
+import asyncio
 
 app = FastAPI()
 
 # Fixed filename for the uploaded file
-uploaded_filename = "file1.png"
+
+# Specify the destination path with the fixed filename
+destination_path = f"uploads/file1.png"
 
 # Allow all origins in development (for testing purposes)
 app.add_middleware(
@@ -36,9 +40,6 @@ def generate_empty_plot(x, y, z, colors):
 @app.post("/uploadfile/")
 async def create_upload_file(file: UploadFile = File(...)):
     try:
-        # Specify the destination path with the fixed filename
-        destination_path = f"uploads/{uploaded_filename}"
-
         # Save the uploaded file with the fixed filename
         with open(destination_path, "wb") as dest_file:
             dest_file.write(file.file.read())
@@ -46,14 +47,9 @@ async def create_upload_file(file: UploadFile = File(...)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-    # Process your uploaded file (if needed)
-    content = await file.read()
-
-    # Use BytesIO to read the content
-    file_content = BytesIO(content)
 
     # Load the point cloud data from the file
-    point_cloud_data = np.loadtxt(file_content, skiprows=1, max_rows=10000)
+    point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
 
     # Extract X, Y, Z coordinates from the point cloud data
     x = point_cloud_data[:, 0]
@@ -64,6 +60,32 @@ async def create_upload_file(file: UploadFile = File(...)):
     colors = ['green'] * len(point_cloud_data)
 
     # Generate the empty plot
+    empty_plot_buffer = generate_empty_plot(x, y, z, colors)
+
+    # Return the empty plot as part of the API response
+    return StreamingResponse(empty_plot_buffer, media_type="image/png")
+
+
+@app.get("/method/1/")
+async def neighborhoodapproach():
+    isBoundaryPoint=KNearestNeighbor(destination_path)
+
+    point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
+    # Extract X, Y, Z coordinates from the point cloud data
+    x = point_cloud_data[:, 0]
+    y = point_cloud_data[:, 1]
+    z = point_cloud_data[:, 2]
+    # Create an array to hold the colors for each point
+    colors = []
+
+    # Example condition: If intensity value is greater than 0.5, color the point green, otherwise red
+
+    for item in isBoundaryPoint:
+        if item==1:
+            colors.append('green')
+        else:
+            colors.append('red')
+    
     empty_plot_buffer = generate_empty_plot(x, y, z, colors)
 
     # Return the empty plot as part of the API response

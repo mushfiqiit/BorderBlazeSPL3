@@ -13,7 +13,7 @@ const MyForm = () => {
     event.preventDefault();
 
     // Make a GET request with the selected option
-    fetch(`http://127.0.0.1:8000/method/${selectedOption}`)
+    fetch(`http://127.0.0.1:8001/method/${selectedOption}`)
       .then(response => response.blob())
       .then(blob => {
         // Convert the blob to a data URL
@@ -38,9 +38,9 @@ const MyForm = () => {
             value={selectedOption}
             onChange={(e) => handleOptionChange(e.target.value)}
           >
-            <option value={1}>Option 1</option>
-            <option value={2}>Option 2</option>
-            <option value={3}>Option 3</option>
+            <option value={1}>Method 1: Neighborhood Based Approach</option>
+            <option value={2}>Method 2: Concave Hull Algorithm</option>
+            <option value={3}>Method 3: Benaulay Triangulation</option>
           </select>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>
@@ -49,7 +49,7 @@ const MyForm = () => {
       {imageSrc && (
         <div className="mt-4">
           <p>Received Image:</p>
-          <img src={imageSrc} alt="Received Image" className="img-fluid" />
+          <img src={imageSrc} alt="Output Image" className="img-fluid" />
         </div>
       )}
     </div>

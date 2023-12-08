@@ -23,14 +23,13 @@ class Home extends Component {
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                         <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#">Link</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="container">
             <div class="text-center mt-5">
-                <h1>Border Blaze</h1>
+                <h1>BORDER BLAZE</h1>
                 <p class="lead">A Boundary Detector Tool for Point Cloud Data</p>
                 <div>
   <br></br> <br></br>

@@ -59,9 +59,7 @@ const FileUploadComponent = () => {
       }
 
       {
-        imageSrc && (
-          <MyForm/>
-        )
+        <MyForm/>
       }
 
     </div>

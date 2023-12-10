@@ -13,7 +13,7 @@ const MyForm = () => {
     event.preventDefault();
 
     // Make a GET request with the selected option
-    fetch(`http://127.0.0.1:8001/method/${selectedOption}`)
+    fetch(`http://127.0.0.1:800${selectedOption}/method/${selectedOption}`)
       .then(response => response.blob())
       .then(blob => {
         // Convert the blob to a data URL
@@ -40,7 +40,7 @@ const MyForm = () => {
           >
             <option value={1}>Method 1: Neighborhood Based Approach</option>
             <option value={2}>Method 2: Concave Hull Algorithm</option>
-            <option value={3}>Method 3: Benaulay Triangulation</option>
+            <option value={3}>Method 3: Delaunay Triangulation</option>
           </select>
         </div>
         <button type="submit" className="btn btn-primary">Submit</button>

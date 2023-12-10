@@ -50,6 +50,7 @@ async def create_upload_file(file: UploadFile = File(...)):
 
     # Load the point cloud data from the file
     point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
+    point_cloud_data[:, 2] = 0
 
     point_cloud_data = point_cloud_data[:, :3]
     # Create an Open3D PointCloud object

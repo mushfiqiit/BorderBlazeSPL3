@@ -25,7 +25,7 @@ def KNearestNeighbor(file_path):
     # Set z-axis values to zero
     point_cloud[:, 2] = 0
     n=len(point_cloud)
-    k=min(250, n-1)
+    k=min(1000, n-1)
     averageDistance=[]
     for nodeToFindNeighbor in range(0, n):
         ##print(nodeToFindNeighbor)
@@ -35,7 +35,7 @@ def KNearestNeighbor(file_path):
             distanceOfNodeI=0.0
             if(i==nodeToFindNeighbor):
                     continue
-            for j in range(0, 3):
+            for j in range(0, 2):
                 distanceOfNodeI+=(point_cloud[i][j]-point_cloud[nodeToFindNeighbor][j])*(point_cloud[i][j]-point_cloud[nodeToFindNeighbor][j])
             distanceOfNodeI=math.sqrt(distanceOfNodeI)
             neighbors.append([distanceOfNodeI, i])
@@ -60,8 +60,8 @@ def KNearestNeighbor(file_path):
 @app.get("/method/1/")
 async def neighborhoodapproach():
     isBoundaryPoint=KNearestNeighbor(destination_path)
-
     point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
+    point_cloud_data[:, 2] = 0
     n=len(point_cloud_data)
     point_cloud_data = point_cloud_data[:, :3]
 

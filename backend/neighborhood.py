@@ -25,7 +25,7 @@ def KNearestNeighbor(file_path):
     # Set z-axis values to zero
     point_cloud[:, 2] = 0
     n=len(point_cloud)
-    k=min(1000, n-1)
+    k=min(100, n-1)
     averageDistance=[]
     for nodeToFindNeighbor in range(0, n):
         ##print(nodeToFindNeighbor)
@@ -35,19 +35,36 @@ def KNearestNeighbor(file_path):
             distanceOfNodeI=0.0
             if(i==nodeToFindNeighbor):
                     continue
-            for j in range(0, 2):
+            for j in range(0, 3):
                 distanceOfNodeI+=(point_cloud[i][j]-point_cloud[nodeToFindNeighbor][j])*(point_cloud[i][j]-point_cloud[nodeToFindNeighbor][j])
             distanceOfNodeI=math.sqrt(distanceOfNodeI)
             neighbors.append([distanceOfNodeI, i])
         neighbors.sort()
+        """print("Coordinates of desired point ", end=" ")
+        for j in range(0, 3):
+                if(j==2):
+                    print(point_cloud[nodeToFindNeighbor][j])
+                else:
+                    print(point_cloud[nodeToFindNeighbor][j], end=" ")"""
         totalDistance=0.0
         for i in range(0, k):
             totalDistance+=neighbors[i][0]
+            """print("Distance: ", end=" ")
+            print(neighbors[i][0], end="  ")
+            print("Index: ", end=" ")
+            print(neighbors[i][1], end="  ")
+            print("Coordinates: ", end=" ")
+            for j in range(0, 3):
+                if(j==2):
+                    print(point_cloud[neighbors[i][1]][j])
+                else:
+                    print(point_cloud[neighbors[i][1]][j], end=" ")"""
         averageDistance.append(totalDistance/k)
+
     sumOfAverageKDistances=0.0
     for item in averageDistance:
         sumOfAverageKDistances+=item
-    threshold=sumOfAverageKDistances/n
+    threshold=1.15*(sumOfAverageKDistances/n)
     isBoundaryPoint=[]
     for i in range(0, n):
         if(averageDistance[i]>threshold):

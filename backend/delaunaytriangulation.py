@@ -7,6 +7,9 @@ from scipy.spatial import Delaunay
 from collections import defaultdict
 import open3d as o3d
 from fastapi.middleware.cors import CORSMiddleware
+from scipy.spatial import distance
+import math
+
 
 app = FastAPI()
 
@@ -19,6 +22,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+def distance(point1, point2):
+    return math.sqrt((point1[0]-point2[0])*(point1[0]-point2[0])+(point1[1]-point2[1])*(point1[1]-point2[1]))
 
 @app.get("/method/3/")
 async def delaunay_approach():
@@ -33,14 +39,42 @@ async def delaunay_approach():
 
     points_2d = np.array(points_2d)  # Convert to NumPy array
 
-    # Apply Delaunay triangulation
-    tri = Delaunay(points_2d)
+    # Example of scaling coordinates
+    points_2d /= 100000000  # Scale by dividing
+
+
+    # Example of removing duplicate points
+    #points_2d = np.unique(points_2d, axis=0)
+
+    xavg=0.0
+    yavg=0.0
+    for i in range(n):
+        xavg+=points_2d[i][0]
+        yavg+=points_2d[i][1]
+    xavg/=n
+    yavg/=n
+    for i in range(n):
+        points_2d[i][0]-=xavg
+        points_2d[i][1]-=yavg
+
+
+    tri = Delaunay(points_2d, furthest_site=False, incremental=False, qhull_options='Qbb Qc Qz')
+
 
     # Create a dictionary to store the count for each edge
     edge_triangle_count = defaultdict(int)
 
+    """ for simplex in tri.simplices:
+        print(simplex[0])
+        print(simplex[1])
+        print(simplex[2]) """
+    
+    threshold=0.0
+
     # Iterate over each simplex to collect unique edges
     for simplex in tri.simplices:
+        if(simplex[0]==simplex[1] or simplex[1]==simplex[2] or simplex[1]==simplex[2]):
+            continue
         for i in range(3):  # A triangle has three edges
             edge = tuple(sorted([simplex[i], simplex[(i + 1) % 3]]))
             edge_triangle_count[edge] += 1
@@ -53,9 +87,19 @@ async def delaunay_approach():
     # Identify boundary points
     for edge in edges_list:
         point1, point2 = edge
-        if edge_triangle_count[edge] <= 1:
+        threshold+=distance(points_2d[point1], points_2d[point2])
+        if edge_triangle_count[edge]<=1:
+            ##print(edge)
             isBoundary[point1] = 1
             isBoundary[point2] = 1
+
+    threshold/=len(edges_list)
+
+    for edge in edges_list:
+        point1, point2 = edge
+        if(distance(points_2d[point1], points_2d[point2])>2.2*threshold):
+            isBoundary[point1]=1
+            isBoundary[point2]=1
 
     red_points = []
     green_points = []

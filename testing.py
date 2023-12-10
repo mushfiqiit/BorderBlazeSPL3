@@ -1,11 +1,10 @@
 import numpy as np
-import matplotlib.pyplot as plt
-from scipy.spatial import Delaunay
+from delaunay2D import Delaunay2D
 from collections import defaultdict
 import open3d as o3d
 
-destination_path = "build4.pts"
-# Generate random 2D points
+destination_path="build4.pts"
+
 point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
 n = len(point_cloud_data)
 point_cloud_data[:, 2] = 0
@@ -17,16 +16,29 @@ for i in range(n):
 
 points_2d = np.array(points_2d)  # Convert to NumPy array
 
-# Apply Delaunay triangulation
-tri = Delaunay(points_2d)
+# Create a random set of 2D points
+seeds = np.random.random((n, 2))
+
+# Create Delaunay Triangulation and insert points one by one
+dt = Delaunay2D()
+
+for i in range (0,n):
+    seeds[i][0]=points_2d[i][0]/1000
+    seeds[i][1]=points_2d[i][1]/1000
+
+for s in seeds:
+    dt.addPoint(s)
+
+#print ("Delaunay triangles:\n", dt.exportTriangles())
+triangles=dt.exportTriangles()
 
 # Create a dictionary to store the count for each edge
 edge_triangle_count = defaultdict(int)
 
-# Iterate over each simplex to collect unique edges
-for simplex in tri.simplices:
+for triangle in triangles:
     for i in range(3):  # A triangle has three edges
-        edge = tuple(sorted([simplex[i], simplex[(i + 1) % 3]]))
+        edge = tuple(sorted([triangle[i], triangle[(i + 1) % 3]]))
+        print(edge)
         edge_triangle_count[edge] += 1
 
 # Convert the set of edges to a list for easier handling
@@ -37,9 +49,12 @@ isBoundary = [0] * n
 # Identify boundary points
 for edge in edges_list:
     point1, point2 = edge
-    if edge_triangle_count[edge] <= 1:
+    print(edge_triangle_count[edge])
+    if edge_triangle_count[edge]<=2:
+        print(edge)
         isBoundary[point1] = 1
         isBoundary[point2] = 1
+
 
 red_points = []
 green_points = []
@@ -65,14 +80,3 @@ merged_point_cloud = red_point_cloud + green_point_cloud
 # Visualize the point cloud
 o3d.visualization.draw_geometries([merged_point_cloud])
 
-# Plot the original points
-plt.scatter(points_2d[:, 0], points_2d[:, 1], color='blue', marker='o', label='Original Points')
-
-# Plot the Delaunay triangulation
-plt.triplot(points_2d[:, 0], points_2d[:, 1], tri.simplices, color='red', label='Delaunay Triangulation')
-
-plt.xlabel('X-axis')
-plt.ylabel('Y-axis')
-plt.title('Delaunay Triangulation on 2D Points')
-plt.legend()
-plt.show()

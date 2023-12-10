@@ -5,7 +5,6 @@ from io import BytesIO
 import numpy as np
 import open3d as o3d
 from fastapi.middleware.cors import CORSMiddleware
-from concavelhull import ConcaveHull
 
 app = FastAPI()
 

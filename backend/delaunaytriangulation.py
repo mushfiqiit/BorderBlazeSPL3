@@ -97,7 +97,7 @@ async def delaunay_approach():
 
     for edge in edges_list:
         point1, point2 = edge
-        if(distance(points_2d[point1], points_2d[point2])>2.2*threshold):
+        if(distance(points_2d[point1], points_2d[point2])>2.25*threshold):
             isBoundary[point1]=1
             isBoundary[point2]=1
 

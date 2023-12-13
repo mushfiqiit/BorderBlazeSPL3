@@ -25,7 +25,7 @@ app.add_middleware(
 async def concavehull():
     point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
     n = len(point_cloud_data)
-    point_cloud_data[:, 2] = 0
+    #point_cloud_data[:, 2] = 0
     point_cloud_data = point_cloud_data[:, :3]
     points = []
 

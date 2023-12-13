@@ -30,7 +30,7 @@ def distance(point1, point2):
 async def delaunay_approach():
     point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
     n = len(point_cloud_data)
-    point_cloud_data[:, 2] = 0
+    #point_cloud_data[:, 2] = 0
     point_cloud_data = point_cloud_data[:, :3]
     points_2d = []
 
@@ -40,7 +40,7 @@ async def delaunay_approach():
     points_2d = np.array(points_2d)  # Convert to NumPy array
 
     # Example of scaling coordinates
-    points_2d /= 100000000  # Scale by dividing
+    #points_2d /= 100000000  # Scale by dividing
 
 
     # Example of removing duplicate points
@@ -97,7 +97,7 @@ async def delaunay_approach():
 
     for edge in edges_list:
         point1, point2 = edge
-        if(distance(points_2d[point1], points_2d[point2])>2.25*threshold):
+        if(distance(points_2d[point1], points_2d[point2])>1.8*threshold):
             isBoundary[point1]=1
             isBoundary[point2]=1
 

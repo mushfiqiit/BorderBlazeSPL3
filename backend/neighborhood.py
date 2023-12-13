@@ -78,7 +78,7 @@ def KNearestNeighbor(file_path):
 async def neighborhoodapproach():
     isBoundaryPoint=KNearestNeighbor(destination_path)
     point_cloud_data = np.loadtxt(destination_path, skiprows=1, max_rows=10000)
-    point_cloud_data[:, 2] = 0
+    #point_cloud_data[:, 2] = 0
     n=len(point_cloud_data)
     point_cloud_data = point_cloud_data[:, :3]
 

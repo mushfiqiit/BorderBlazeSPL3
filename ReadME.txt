@@ -1,4 +1,4 @@
-BorderBlaze: An Automated Tool to Segment Boundary Points in Lidar Point Cloud Data
+# BorderBlaze: An Automated Tool to Segment Boundary Points in Lidar Point Cloud Data
 
 I applied three methods to segment boundary points in lidar point cloud data of building roofs
 1. K Nearest Neighbor algorithm.

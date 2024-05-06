@@ -9,3 +9,15 @@ Tools: FastAPI, Python, React
 
 
 You can check the project summary here: https://docs.google.com/presentation/d/1-yDwAAvjtULVYhcMNNtuOEA1ScHNVBjZUIxOswtsQZs/edit#slide=id.g27d6770334c_0_332
+
+
+## References
+
+1. Tseng, Y. H., & Hung, H. C. (2016). Extraction of building boundary lines from airborne lidar point clouds. The International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences, 41, 957-962.
+
+2. Awrangjeb, M., & Lu, G. (2015, November). A triangulation-based technique for building boundary identification from point cloud data. In 2015 International Conference on Image and Vision Computing New Zealand (IVCNZ) (pp. 1-6). IEEE.
+
+3. Dey, E. K., Awrangjeb, M., Kurdi, F. T., & Stantic, B. (2021, November). Building Boundary Extraction from LiDAR Point Cloud Data. In 2021 Digital Image Computing: Techniques and Applications (DICTA) (pp. 1-6). IEEE.
+
+
+

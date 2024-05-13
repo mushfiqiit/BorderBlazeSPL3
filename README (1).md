@@ -8,7 +8,33 @@ I applied three methods to segment boundary points in lidar point cloud data of 
 Tools: FastAPI, Python, React
 
 
-You can check the project summary here: https://docs.google.com/presentation/d/1-yDwAAvjtULVYhcMNNtuOEA1ScHNVBjZUIxOswtsQZs/edit#slide=id.g27d6770334c_0_332
+
+You can check project slides here: https://docs.google.com/presentation/d/1-yDwAAvjtULVYhcMNNtuOEA1ScHNVBjZUIxOswtsQZs/edit#slide=id.g27d6770334c_0_332
+
+
+## Screenshots
+
+![App Screenshot](Screenshots/home)
+![App Screenshot](Screenshots/Neighborhood)
+![App Screenshot](Screenshots/ConcaveHull)
+![App Screenshot](Screenshots/Delaunay)
+
+
+## Installation
+
+Install my-project with pip
+
+```python
+  pip install -r requirements.txt
+```
+    
+## Deployment
+
+To deploy this project run
+
+```bash
+  
+```
 
 
 ## References

@@ -30,13 +30,21 @@ Install my-project with pip
     
 ## Deployment
 
-To deploy this project run
+To deploy the project frontend run:
 
 ```bash
-  
+  cd frontend
+  npm start
 ```
 
-
+For backend run:
+```bash
+  cd backend
+  uvicorn main:app --reload
+  uvicorn neighborhood:app --port 8001
+  uvicorn concavelhull:app --port 8002
+  uvicorn delaunaytriangulation:app --port 8003
+```
 ## References
 
 1. Tseng, Y. H., & Hung, H. C. (2016). Extraction of building boundary lines from airborne lidar point clouds. The International Archives of the Photogrammetry, Remote Sensing and Spatial Information Sciences, 41, 957-962.

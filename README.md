@@ -14,10 +14,10 @@ You can check project slides here: https://docs.google.com/presentation/d/1-yDwA
 
 ## Screenshots
 
-![App Screenshot](Screenshots/home.jpg)
-![App Screenshot](Screenshots/Neighborhood.jpg)
-![App Screenshot](Screenshots/ConcaveHull.jpg)
-![App Screenshot](Screenshots/Delaunay.jpg)
+![App Screenshot](Screenshots/home.png)
+![App Screenshot](Screenshots/Neighborhood.png)
+![App Screenshot](Screenshots/ConcaveHull.png)
+![App Screenshot](Screenshots/Delaunay.png)
 
 
 ## Installation
